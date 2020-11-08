@@ -20,13 +20,11 @@ export const injectAsyncSagas = ({store, name, saga}: ParamsType) => {
     dispatch,
     router,
     asyncSagas,
-    sagaMiddleware: {
-      run: {runSaga},
-    },
+    sagaMiddleware: {run},
   } = store;
 
   if (asyncSagas) {
-    const newSaga = runSaga(saga, { router, dispatch });
+    const newSaga = run(saga, {router, dispatch});
     asyncSagas[name] = newSaga;
   }
 };
