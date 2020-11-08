@@ -11,6 +11,12 @@ export const getPlayListSelector = createSelector(
   ({playlist}: PlayListStorageType) => playlist
 );
 
+export const getCoverSelector = createSelector(
+  [playListStorageSelector],
+  ({cover}: PlayListStorageType) => cover
+);
+
+
 export const isPlaylistLoadingSelector = createSelector(
     [playListStorageSelector],
     ({isLoading}: PlayListStorageType) => isLoading

@@ -1,4 +1,5 @@
 import {
+  SET_COVER_ACTION,
   SET_PLAYLIST_ACTION,
   START_LOADING_PLAYLIST_ACTION,
   STOP_LOADING_PLAYLIST_ACTION,
@@ -6,7 +7,8 @@ import {
 import {PlayListActionType, PlayListStorageType} from "./types";
 
 export const initialState: PlayListStorageType = {
-  playlist: ["qwe2"],
+  playlist: [],
+  cover: "",
   isLoading: false,
 };
 
@@ -19,6 +21,9 @@ export const playlistReducer = (
   switch (type) {
     case SET_PLAYLIST_ACTION:
       return {...state, playlist: payload};
+
+    case SET_COVER_ACTION:
+      return {...state, cover: payload};
 
     case START_LOADING_PLAYLIST_ACTION:
       return {...state, isLoading: true};
