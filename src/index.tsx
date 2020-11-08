@@ -1,17 +1,35 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDom from "react-dom";
+import {Provider} from "react-redux";
+import browserPlugin from "router5-plugin-browser";
+import loggerPlugin from "router5-plugin-logger";
+import {Page} from "./player";
+import createRouter from "router5";
+import {routes} from "./player/routes";
+import {createAppStore} from "./utils/create-app-store/create-app-store";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const root = document.getElementById("root");
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+const router = createRouter(routes, {
+  defaultRoute: "home",
+  defaultParams: {},
+  allowNotFound: false,
+  caseSensitive: true,
+  queryParamsMode: "loose",
+});
+
+router.usePlugin(browserPlugin());
+router.usePlugin(loggerPlugin);
+
+const store = createAppStore({router});
+
+router.setDependencies({routes, store});
+
+router.start(() => {
+  ReactDom.render(
+    <Provider store={store}>
+      <Page router={router} />
+    </Provider>,
+    root
+  );
+});
