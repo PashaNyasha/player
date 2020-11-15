@@ -32,7 +32,7 @@ export const Track = memo(
         type="button"
         className={cn(CLASS_NAME, {[`${CLASS_NAME}--is-active`]: isActive})}
       >
-        <Text text={name} size="h4" color="black" />
+        <Text text={name} size="h4" color="white" hasShadow />
       </button>
     );
   }

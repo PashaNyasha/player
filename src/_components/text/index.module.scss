@@ -3,6 +3,10 @@
 .Text {
   font-family: $OpenSans;
 
+  &--has-shadow {
+    text-shadow: 2px 2px 3px rgba(#000, 0.4);
+  }
+
   &--h1 {
     font-size: 40px;
   }
@@ -25,6 +29,34 @@
 
   &--h6 {
     font-size: 10px;
+  }
+
+  &--black {
+    color: #000000;
+  }
+
+  &--white {
+    color: #ffffff;
+  }
+
+  &--letter-spacing-1 {
+    letter-spacing: 1px;
+  }
+
+  &--letter-spacing-2 {
+    letter-spacing: 2px;
+  }
+
+  &--letter-spacing-3 {
+    letter-spacing: 3px;
+  }
+
+  &--letter-spacing-4 {
+    letter-spacing: 4px;
+  }
+
+  &--letter-spacing-5 {
+    letter-spacing: 5px;
   }
 
   &--is-bold {

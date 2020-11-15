@@ -12,6 +12,7 @@ export type TrackListStorageType = {
   trackName: string;
   trackIndex: number;
   cover: string;
+  background: string;
   isLoading: boolean;
 };
 

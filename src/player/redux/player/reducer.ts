@@ -1,4 +1,5 @@
 import {
+  SET_BACKGROUND_ACTION,
   SET_COVER_ACTION,
   SET_PLAYER_ACTION,
   SET_TRACK_INDEX_ACTION,
@@ -12,10 +13,10 @@ import {TrackListActionType, TrackListStorageType} from "./types";
 export const initialState: TrackListStorageType = {
   trackList: [
     {
-      url: '',
-      name: '',
+      url: "",
+      name: "",
       size: 0,
-      extension: '',
+      extension: "",
       id: 0,
     },
   ],
@@ -23,6 +24,7 @@ export const initialState: TrackListStorageType = {
   trackIndex: 0,
   player: new Audio(),
   cover: "",
+  background: "",
   isLoading: false,
 };
 
@@ -47,6 +49,9 @@ const reducer = (
 
     case SET_COVER_ACTION:
       return {...state, cover: payload};
+
+    case SET_BACKGROUND_ACTION:
+      return {...state, background: payload};
 
     case START_LOADING_TRACK_LIST_ACTION:
       return {...state, isLoading: true};

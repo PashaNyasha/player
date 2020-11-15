@@ -7,14 +7,14 @@ const cn = classnames.bind(styles);
 
 type PropsType = {
   progress: string;
-  min: number;
   max: number;
   currentTime: number;
+  isDisabled: boolean;
   onChangeProgress: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
 export const ProgressBar = memo(
-  ({min, max, currentTime, progress, onChangeProgress}: PropsType) => {
+  ({isDisabled, max, currentTime, progress, onChangeProgress}: PropsType) => {
     const doneLineRef = useRef<HTMLDivElement>(null);
     const thumbRef = useRef<HTMLDivElement>(null);
 
@@ -32,10 +32,11 @@ export const ProgressBar = memo(
         <input
           className={cn(`${CLASS_NAME}__range`)}
           type="range"
-          value={progress}
+          value={currentTime}
           min={0}
-          max={1000}
+          max={max}
           onChange={onChangeProgress}
+          disabled={isDisabled}
         />
 
         <div ref={doneLineRef} className={cn(`${CLASS_NAME}__done-line`)} />

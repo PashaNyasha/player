@@ -77,10 +77,7 @@ export const PlayerControls = memo(
         const {currentTime} = audioPlayer.current;
         setCurrentTime(currentTime);
 
-        const updatedProgress = String(
-          Math.floor((currentTime / duration) * 100)
-        );
-
+        const updatedProgress = String((currentTime / duration) * 100);
         setProgress(updatedProgress);
 
         if (currentTime === duration) {
@@ -98,38 +95,51 @@ export const PlayerControls = memo(
 
     const handleChangeProgress = useCallback(
       ({target: {value}}: ChangeEvent<HTMLInputElement>) => {
-        // setProgress(value);
         const {current} = audioPlayer;
         if (current) {
-          setCurrentTime(Number(value));
-          current.currentTime = Number(value);
           setProgress(value);
-          console.log(value)
+          console.log(value);
+          current.currentTime = Number(value);
         }
       },
       []
     );
 
+    const onErrorPlayerSrc = useCallback(() => {
+      const {current} = audioPlayer;
+      if (current) {
+        current.pause();
+        current.currentTime = 0;
+      }
+    }, []);
+
     return (
       <div className={cn(CLASS_NAME)}>
         <div className={cn(`${CLASS_NAME}__track-name`)}>
-          <Text text={currentTrackName} color="black" size="h1" isBold />
+          <Text
+            text={currentTrackName}
+            color="white"
+            size="h1"
+            isBold
+            hasShadow
+            letterSpacing="2"
+          />
         </div>
 
         <audio
-          controls
           onDurationChange={onChangeDuration}
           onTimeUpdate={onUpdateTime}
           ref={audioPlayer}
-          src={`http://localhost:8082/album${url}`}
+          src={url}
+          onError={onErrorPlayerSrc}
         />
 
         <ProgressBar
           progress={progress}
           onChangeProgress={handleChangeProgress}
-          min={0}
           max={duration}
           currentTime={currentTime}
+          isDisabled={!isPlaying}
         />
 
         <div className={cn(`${CLASS_NAME}__progress`)}>
