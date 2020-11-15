@@ -1,3 +1,33 @@
+@import "../../styles/fonts.module.scss";
+
 .Text {
-  font-family: 'Lato';
+  font-family: $OpenSans;
+
+  &--h1 {
+    font-size: 40px;
+  }
+
+  &--h2 {
+    font-size: 30px;
+  }
+
+  &--h3 {
+    font-size: 20px;
+  }
+
+  &--h4 {
+    font-size: 16px;
+  }
+
+  &--h5 {
+    font-size: 12px;
+  }
+
+  &--h6 {
+    font-size: 10px;
+  }
+
+  &--is-bold {
+    font-family: $OpenSansSemiBold;
+  }
 }

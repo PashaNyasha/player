@@ -1,37 +1,62 @@
 import {
   SET_COVER_ACTION,
-  SET_PLAYLIST_ACTION,
-  START_LOADING_PLAYLIST_ACTION,
-  STOP_LOADING_PLAYLIST_ACTION,
+  SET_PLAYER_ACTION,
+  SET_TRACK_INDEX_ACTION,
+  SET_TRACK_LIST_ACTION,
+  SET_TRACK_NAME_ACTION,
+  START_LOADING_TRACK_LIST_ACTION,
+  STOP_LOADING_TRACK_LIST_ACTION,
 } from "./actions";
-import {PlayListActionType, PlayListStorageType} from "./types";
+import {TrackListActionType, TrackListStorageType} from "./types";
 
-export const initialState: PlayListStorageType = {
-  playlist: [],
+export const initialState: TrackListStorageType = {
+  trackList: [
+    {
+      url: '',
+      name: '',
+      size: 0,
+      extension: '',
+      id: 0,
+    },
+  ],
+  trackName: "",
+  trackIndex: 0,
+  player: new Audio(),
   cover: "",
   isLoading: false,
 };
 
-export const PLAY_LIST_REDUCER_NAME = "PLAY_LIST_REDUCER_NAME";
+export const TRACK_LIST_REDUCER_NAME = "TRACK_LIST_REDUCER_NAME";
 
-export const playlistReducer = (
-  state: PlayListStorageType = initialState,
-  {type, payload}: PlayListActionType
+const reducer = (
+  state: TrackListStorageType = initialState,
+  {type, payload}: TrackListActionType
 ) => {
   switch (type) {
-    case SET_PLAYLIST_ACTION:
-      return {...state, playlist: payload};
+    case SET_TRACK_LIST_ACTION:
+      return {...state, trackList: payload};
+
+    case SET_TRACK_NAME_ACTION:
+      return {...state, trackName: payload};
+
+    case SET_TRACK_INDEX_ACTION:
+      return {...state, trackIndex: payload};
+
+    case SET_PLAYER_ACTION:
+      return {...state, player: payload};
 
     case SET_COVER_ACTION:
       return {...state, cover: payload};
 
-    case START_LOADING_PLAYLIST_ACTION:
+    case START_LOADING_TRACK_LIST_ACTION:
       return {...state, isLoading: true};
 
-    case STOP_LOADING_PLAYLIST_ACTION:
+    case STOP_LOADING_TRACK_LIST_ACTION:
       return {...state, isLoading: false};
 
     default:
       return state;
   }
 };
+
+export default reducer;
