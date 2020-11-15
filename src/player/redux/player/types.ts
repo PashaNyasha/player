@@ -1,4 +1,4 @@
-export type PlayListItemType = {
+export type TrackListItemType = {
   name: string;
   id: number;
   size: number;
@@ -6,13 +6,16 @@ export type PlayListItemType = {
   url: string;
 };
 
-export type PlayListStorageType = {
-  playlist: Array<PlayListItemType>;
+export type TrackListStorageType = {
+  player: HTMLAudioElement;
+  trackList: Array<TrackListItemType>;
+  trackName: string;
+  trackIndex: number;
   cover: string;
   isLoading: boolean;
 };
 
-export type PlayListActionType = {
+export type TrackListActionType = {
   type: string;
-  payload?: Array<PlayListItemType> | string;
+  payload?: Array<TrackListItemType> | string | number | HTMLAudioElement;
 };

@@ -1,7 +1,11 @@
-.Album-item {
+.Track {
   background: lightgrey;
   border: none;
   padding: 10px;
   margin-bottom: 12px;
   cursor: pointer;
+
+  &--is-active {
+    background: red;
+  }
 }

@@ -10,15 +10,15 @@ type PropsType = {
   text: string;
   size: SizeType;
   color: ColorsType;
-  isBold?: string;
+  isBold?: boolean;
 };
 
 export const Text = memo(({text, isBold, size, color}: PropsType) => (
   <span
     className={cn(
       CLASS_NAME,
-      `${CLASS_NAME}--color-${color}`,
-      `${CLASS_NAME}--color-${size}`,
+      `${CLASS_NAME}--${color}`,
+      `${CLASS_NAME}--${size}`,
       {
         [`${CLASS_NAME}--is-bold`]: isBold,
       }
