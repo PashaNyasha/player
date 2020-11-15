@@ -1,11 +1,18 @@
+@mixin active {
+  background:  rgba(#000, 0.7);
+}
+
 .Track {
-  background: lightgrey;
+  background: rgba(#000, 0.4);
   border: none;
   padding: 10px;
-  margin-bottom: 12px;
   cursor: pointer;
 
+  &:hover {
+    @include active;
+  }
+
   &--is-active {
-    background: red;
+    @include active;
   }
 }

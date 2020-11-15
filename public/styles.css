@@ -1,23 +1,28 @@
 * {
-    box-sizing: border-box;
-  }
+  box-sizing: border-box;
+}
 
-  @font-face {
-    font-display: swap;
-    font-family: 'Open Sans';
-    font-weight: 300;
-    src: url('./fonts/open-sans-light.ttf');
-  }
+html {
+  height: 100%;
+}
 
-  @font-face {
-    font-display: swap;
-    font-family: 'Open Sans SemiBold';
-    font-weight: 600;
-    src: url('./fonts/open-sans-semi-bold.ttf');
-  }
-  
-  body {
-    margin: 0;
-    font-family: "Open Sans";
-  }
-  
+@font-face {
+  font-display: swap;
+  font-family: "Open Sans";
+  font-weight: 300;
+  src: url("./fonts/open-sans-light.ttf");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Open Sans SemiBold";
+  font-weight: 600;
+  src: url("./fonts/open-sans-semi-bold.ttf");
+}
+
+body {
+  margin: 0;
+  font-family: "Open Sans";
+  background: linear-gradient(to bottom, #090a0a 0%, #2c2c2c 100%);
+  overflow: hidden;
+}

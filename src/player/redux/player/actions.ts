@@ -12,6 +12,12 @@ export const setCoverAction = (payload: string) => ({
   payload,
 });
 
+export const SET_BACKGROUND_ACTION = "SET_BACKGROUND_ACTION";
+export const setBackgroundAction = (payload: string) => ({
+  type: SET_BACKGROUND_ACTION,
+  payload,
+});
+
 export const SET_TRACK_NAME_ACTION = "SET_TRACK_NAME_ACTION";
 export const setTrackNameAction = (payload: string) => ({
   type: SET_TRACK_NAME_ACTION,

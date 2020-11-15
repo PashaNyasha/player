@@ -1,40 +1,33 @@
 const fs = require("fs");
 const path = require("path");
 const {albumStorage} = require("./sound-storage");
-const { checkIsCover } = require('./check-is-cover');
+const {SERVER_PORT} = require("../constants/server-port");
 
 module.exports.makeAlbum = () => {
-  const dirPath = path.join(__dirname, "../../server/disc");
+  const dirPath = path.join(__dirname, "../../server/disc/sonic-mania/sound/");
   const filesNames = fs.readdirSync(dirPath);
   const urls = albumStorage();
 
-  const foundCover = filesNames.find((fileName) => checkIsCover(fileName));
-  const cover = `/album/disc/${foundCover}`;
-
-  const withoutCover = filesNames.filter((fileName) => {
-    const isCover = checkIsCover(fileName)
-
-    return !isCover;
-  });
-
-  const trackList = withoutCover.map((fileName, index) => {
+  const trackList = filesNames.map((fileName, index) => {
     const filePath = path.join(dirPath, "/", fileName);
-
     const {size} = fs.statSync(filePath);
-
     const [name, extension] = fileName.split(".");
+
+    let url = `http://localhost:${SERVER_PORT}/album/sound/${urls[index].route}`;
+
 
     return {
       name,
       extension,
       size,
-      url: urls[index].route,
+      url,
       id: index,
     };
   });
 
   return {
     trackList,
-    cover,
-  }
+    cover: 'http://localhost:8082/static/sonic-mania/cover.png',
+    background: 'http://localhost:8082/static/sonic-mania/bg.png',
+  };
 };

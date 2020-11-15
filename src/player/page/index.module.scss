@@ -1,6 +1,22 @@
+@import "../../styles/scroll-bar.scss";
+
 .Player {
+  position: relative;
+  height: 100%;
+
+  &__background {
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+    opacity: .4;
+  }
+
   &__panel {
     display: flex;
+    padding: 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
   }
 
   &__cover {
@@ -13,11 +29,16 @@
 
   &__controls {
     width: 100%;
+    align-self: flex-end;
   }
 
   &__tracklist {
     display: flex;
     flex-direction: column;
     max-width: 500px;
+    max-height: 700px;
+    overflow-y: auto;
+
+    @include scrollbarStyles;
   }
 }

@@ -15,6 +15,7 @@ import {
   setTrackIndexAction,
   setTrackNameAction,
   getFirstTrackSelector,
+  getAlbumBackgroundSelector,
 } from "../redux/player";
 import {TrackListItemType} from "../redux/player/types";
 import {PlayerControls} from "../_components/player-controls";
@@ -35,16 +36,25 @@ type PropsType = {
   cover: string;
   tracksCount: number;
   firstTrackOnLoad: TrackListItemType;
+  background: string;
   isLoading: boolean;
   onSetTrackName: (name: string) => void;
   onSetTrackIndex: (index: number) => void;
   onSetPlayer: (player: HTMLAudioElement) => void;
 };
 
-class Player extends Component<PropsType> {
+type StateType = {
+  hasBackround: boolean;
+};
+
+class Player extends Component<PropsType, StateType> {
+  state = {
+    hasBackround: true,
+  };
+
   handlePlay = ({url, name, index}: HandlePlayType) => {
     const {player, onSetTrackName, onSetTrackIndex} = this.props;
-    player.src = `http://localhost:8082/album${url}`;
+    player.src = url;
     player.play();
 
     onSetTrackName(name);
@@ -59,6 +69,10 @@ class Player extends Component<PropsType> {
     this.handlePlay({url, name, index});
   };
 
+  onErrorLoadingBackgound = () => {
+    this.setState({hasBackround: false});
+  };
+
   render() {
     const {
       trackList,
@@ -67,9 +81,11 @@ class Player extends Component<PropsType> {
       trackName,
       isLoading,
       firstTrackOnLoad,
+      background,
       onSetPlayer,
     } = this.props;
-    const albumCover = `http://localhost:8082${cover}`;
+
+    const {hasBackround} = this.state;
 
     return (
       <div>
@@ -77,10 +93,19 @@ class Player extends Component<PropsType> {
           <Spinner />
         ) : (
           <div className={cn(CLASS_NAME)}>
+            {hasBackround && (
+              <img
+                className={cn(`${CLASS_NAME}__background`)}
+                src={background}
+                alt="bg"
+                onError={this.onErrorLoadingBackgound}
+              />
+            )}
+
             <div className={cn(`${CLASS_NAME}__panel`)}>
               <img
                 className={cn(`${CLASS_NAME}__cover`)}
-                src={albumCover}
+                src={cover}
                 alt="cover"
               />
 
@@ -123,6 +148,7 @@ const mapStateToProps = (state: ReduxStorageType) => ({
   trackIndex: getTrackIndexSelector(state),
   trackName: getTrackNameSelector(state),
   firstTrackOnLoad: getFirstTrackSelector(state),
+  background: getAlbumBackgroundSelector(state),
   isLoading: isPlaylistLoadingSelector(state),
 });
 

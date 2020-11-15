@@ -26,6 +26,11 @@ export const getAlbumCoverSelector = createSelector(
   ({cover}: TrackListStorageType) => cover
 );
 
+export const getAlbumBackgroundSelector = createSelector(
+  [trackListStorageSelector],
+  ({background}: TrackListStorageType) => background
+);
+
 export const getTrackNameSelector = createSelector(
   [trackListStorageSelector],
   ({trackName}: TrackListStorageType) => trackName
