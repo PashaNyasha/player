@@ -1,0 +1,30 @@
+.Tooltip {
+  &__text-box {
+    display: inline-block;
+    max-width: 700px;
+    padding: 12px;
+    position: relative;
+    border-radius: 4px 4px 0 0;
+    background: rgba(#000, 0.4);
+    opacity: 0;
+    transition: 0.3s ease;
+    margin-bottom: 8px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 0;
+      border: 8px solid transparent;
+      border-right-color: rgba(#000, 0.4);
+      border-bottom-color: rgba(#000, 0.4);
+      transform: rotate(45deg);
+      bottom: -8px;
+      left: calc(50% - 8px);
+    }
+  }
+
+  &:hover > &__text-box {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,20 @@
+.Notification {
+  background: rgba(#000, 0.4);
+  border-radius: 6px 0 0 6px;
+  width: 350px;
+  padding: 10px;
+  position: absolute;
+  top: 10px;
+  right: 0;
+  margin-bottom: 12px;
+  transition: 0.5s ease;
+  transform: translateX(120%);
+
+  &--is-show {
+    transform: translateX(0%);
+  }
+
+  &__header {
+    margin-bottom: 8px;
+  }
+}

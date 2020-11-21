@@ -19,10 +19,14 @@ import {
 } from "../redux/player";
 import {TrackListItemType} from "../redux/player/types";
 import {PlayerControls} from "../_components/player-controls";
-import {Track} from "../_components/player-controls/_components/track";
 import classnames from "classnames/bind";
 import styles from "./index.module.scss";
 import {HandlePlayType} from "./_types";
+import {TrackList} from "./__components/track-list";
+import {
+  SetNotificationType,
+  showNotificationAction,
+} from "../../redux/notifications";
 
 const CLASS_NAME = "Player";
 const cn = classnames.bind(styles);
@@ -38,6 +42,7 @@ type PropsType = {
   firstTrackOnLoad: TrackListItemType;
   background: string;
   isLoading: boolean;
+  onShowNotification: (params: SetNotificationType) => void;
   onSetTrackName: (name: string) => void;
   onSetTrackIndex: (index: number) => void;
   onSetPlayer: (player: HTMLAudioElement) => void;
@@ -73,6 +78,13 @@ class Player extends Component<PropsType, StateType> {
     this.setState({hasBackround: false});
   };
 
+  show = () => {
+    const {trackList, tracksCount, trackIndex, onShowNotification} = this.props;
+    const index = trackIndex < tracksCount ? trackIndex + 1 : 0;
+    const { name } = trackList[index];
+    onShowNotification({ text: name });
+  };
+
   render() {
     const {
       trackList,
@@ -101,7 +113,7 @@ class Player extends Component<PropsType, StateType> {
                 onError={this.onErrorLoadingBackgound}
               />
             )}
-
+            <button onClick={this.show}>SHOW</button>
             <div className={cn(`${CLASS_NAME}__panel`)}>
               <img
                 className={cn(`${CLASS_NAME}__cover`)}
@@ -115,23 +127,17 @@ class Player extends Component<PropsType, StateType> {
                   onChangeTrack={this.onChangeTrack}
                   onSetPlayer={onSetPlayer}
                   firstTrackOnLoad={firstTrackOnLoad}
+                  onShowNextTrack={this.show}
                 />
               </div>
             </div>
 
             <div className={cn(`${CLASS_NAME}__tracklist`)}>
-              {trackList.map(
-                ({url, name}: TrackListItemType, index: number) => (
-                  <Track
-                    url={url}
-                    name={name}
-                    onPlayMusic={this.handlePlay}
-                    key={name}
-                    index={index}
-                    currentIndex={trackIndex}
-                  />
-                )
-              )}
+              <TrackList
+                trackIndex={trackIndex}
+                trackList={trackList}
+                onPlayTrack={this.handlePlay}
+              />
             </div>
           </div>
         )}
@@ -156,6 +162,7 @@ const mapDispatchToProps = {
   onSetTrackName: setTrackNameAction,
   onSetTrackIndex: setTrackIndexAction,
   onSetPlayer: setPlayerAction,
+  onShowNotification: showNotificationAction,
 };
 
 export const ConnectedPlayer = connect(

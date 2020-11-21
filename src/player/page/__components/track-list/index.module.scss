@@ -1,0 +1,20 @@
+@import "../../../../styles/scroll-bar.scss";
+
+.Track-list {
+  max-width: 500px;
+
+  &__tracks {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    max-height: 700px;
+    transition: 0.3s ease;
+    position: relative;
+
+    @include scrollbarStyles;
+  }
+
+  &__close-button {
+    position: absolute;
+  }
+}

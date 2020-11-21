@@ -1,6 +1,84 @@
+@import "../../../styles/fonts.module.scss";
+
+$stick: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+$play1: polygon(0 0, 100% 25%, 100% 75%, 0 100%);
+$play2: polygon(0 25%, 100% 50%, 0 75%, 0 25%);
+
 .Player-controls {
   padding: 10px;
   &__track-name {
     max-width: 700px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 40px;
+    color: #ffffff;
+    margin-bottom: 12px;
+    cursor: default;
+  }
+
+  &__buttons {
+    display: flex;
+  }
+
+  &__play-button {
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    outline: none;
+    padding: 0;
+    top: 0;
+    position: relative;
+    cursor: pointer;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      width: 25%;
+      height: 80%;
+      background: #ffffff;
+      top: 10%;
+      transition: 0.3s ease;
+    }
+
+    &::before {
+      left: 0;
+      transform: translateX(100%);
+      clip-path: $play1;
+    }
+
+    &::after {
+      right: 0;
+      transform: translateX(-100%);
+      clip-path: $play2;
+    }
+
+    &--is-pause {
+      &::before {
+        transform: translateX(80%);
+        clip-path: $stick;
+      }
+
+      &::after {
+        transform: translateX(-80%);
+        clip-path: $stick;
+      }
+    }
+
+    &:disabled {
+      &::before,
+      &::after {
+        opacity: 0.4;
+      }
+    }
+  }
+
+  &__volume {
+    width: 40px;
+    height: 40px;
+    margin-left: 12px;
+    background: #fff;
   }
 }

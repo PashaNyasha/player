@@ -1,5 +1,3 @@
-@import "../../styles/scroll-bar.scss";
-
 .Player {
   position: relative;
   height: 100%;
@@ -30,15 +28,5 @@
   &__controls {
     width: 100%;
     align-self: flex-end;
-  }
-
-  &__tracklist {
-    display: flex;
-    flex-direction: column;
-    max-width: 500px;
-    max-height: 700px;
-    overflow-y: auto;
-
-    @include scrollbarStyles;
   }
 }
