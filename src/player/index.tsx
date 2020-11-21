@@ -14,6 +14,7 @@ import {
 } from "./redux/player/sagas/get-track-list/watcher-saga";
 import {IAppStore} from "../utils/create-app-store/_types";
 import {ConnectedPlayer} from "./page";
+import notificationsReducer, { NOTIFICATIONS_REDUCER_NAME } from "../redux/notifications/redux";
 
 type PropsType = {
   router: Router;
@@ -26,6 +27,12 @@ export const Page = ({router}: PropsType) => {
     store,
     name: TRACK_LIST_REDUCER_NAME,
     reducer: trackListReducer,
+  });
+
+  injectAsyncReducers({
+    store,
+    name: NOTIFICATIONS_REDUCER_NAME,
+    reducer: notificationsReducer,
   });
 
   injectAsyncSagas({

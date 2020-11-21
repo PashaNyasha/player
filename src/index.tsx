@@ -7,6 +7,7 @@ import {Page} from "./player";
 import createRouter from "router5";
 import {routes} from "./player/routes";
 import {createAppStore} from "./utils/create-app-store/create-app-store";
+import {Root} from "./_components/root";
 
 const root = document.getElementById("root");
 
@@ -27,9 +28,12 @@ router.setDependencies({routes, store});
 
 router.start(() => {
   ReactDom.render(
-    <Provider store={store}>
-      <Page router={router} />
-    </Provider>,
+    <>
+      <Provider store={store}>
+        <Root />
+        <Page router={router} />
+      </Provider>
+    </>,
     root
   );
 });

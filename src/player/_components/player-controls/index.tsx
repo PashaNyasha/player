@@ -13,6 +13,7 @@ import {formatPlayerTime} from "./_utils/format-player-time";
 import {Text} from "../../../_components/text";
 import {TrackListItemType} from "../../redux/player/types";
 import {ProgressBar} from "./_components/track/progress-bar";
+import {Tooltip} from "../../../_components/tooltip";
 
 const CLASS_NAME = "Player-controls";
 const cn = classnames.bind(styles);
@@ -22,6 +23,7 @@ type PropsType = {
   firstTrackOnLoad: TrackListItemType;
   onChangeTrack: () => void;
   onSetPlayer: (player: HTMLAudioElement) => void;
+  onShowNextTrack: () => void;
 };
 
 export const PlayerControls = memo(
@@ -30,6 +32,7 @@ export const PlayerControls = memo(
     firstTrackOnLoad: {url, name: firstTrackName},
     onChangeTrack,
     onSetPlayer,
+    onShowNextTrack,
   }: PropsType) => {
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const [currentTime, setCurrentTime] = useState<number>(0);
@@ -77,8 +80,8 @@ export const PlayerControls = memo(
         const {currentTime} = audioPlayer.current;
         setCurrentTime(currentTime);
 
-        const updatedProgress = String((currentTime / duration) * 100);
-        setProgress(updatedProgress);
+        const updatedProgress = (currentTime / duration) * 100;
+        setProgress(String(updatedProgress));
 
         if (currentTime === duration) {
           onChangeTrack();
@@ -105,6 +108,17 @@ export const PlayerControls = memo(
       []
     );
 
+    const handleChangeVolume = useCallback(
+      ({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
+        const {current} = audioPlayer;
+        if (current) {
+          current.volume = Number(value);
+          console.log(Number(value) * 100)
+        }
+      },
+      []
+    );
+
     const onErrorPlayerSrc = useCallback(() => {
       const {current} = audioPlayer;
       if (current) {
@@ -115,16 +129,18 @@ export const PlayerControls = memo(
 
     return (
       <div className={cn(CLASS_NAME)}>
-        <div className={cn(`${CLASS_NAME}__track-name`)}>
-          <Text
-            text={currentTrackName}
-            color="white"
-            size="h1"
-            isBold
-            hasShadow
-            letterSpacing="2"
-          />
-        </div>
+        <Tooltip text={currentTrackName}>
+          <div className={cn(`${CLASS_NAME}__track-name`)}>
+            <Text
+              text={currentTrackName}
+              color="white"
+              size="h1"
+              isBold
+              hasShadow
+              letterSpacing="2"
+            />
+          </div>
+        </Tooltip>
 
         <audio
           onDurationChange={onChangeDuration}
@@ -146,15 +162,28 @@ export const PlayerControls = memo(
           <Text text={time} color="black" size="h2" />
         </div>
 
-        <button
-          onClick={handlePlay}
-          className={cn(`${CLASS_NAME}__play-button`, {
-            [`${CLASS_NAME}__play-button--is-pause`]: isPlaying,
-          })}
-          disabled={isButtonDisabled}
-        >
-          {isPlaying ? "Pause" : "Play"}
-        </button>
+        <div className={cn(`${CLASS_NAME}__buttons`)}>
+          <button
+            onClick={handlePlay}
+            className={cn(`${CLASS_NAME}__play-button`, {
+              [`${CLASS_NAME}__play-button--is-pause`]: isPlaying,
+            })}
+            disabled={isButtonDisabled}
+          />
+
+          <div className={cn(`${CLASS_NAME}__volume`)}>
+            <input
+              type="range"
+              name="volume"
+              id="Volume"
+              onChange={handleChangeVolume}
+              min={0}
+              max={1}
+              step={0.1}
+              className={cn(`${CLASS_NAME}__volume-thumb`)}
+            />
+          </div>
+        </div>
       </div>
     );
   }
