@@ -2,6 +2,26 @@
 
 .Track-list {
   max-width: 500px;
+  position: relative;
+
+  &__toggle-button {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    z-index: 1;
+    background: none;
+    border: none;
+    outline: none;
+    margin: 10px;
+    transition: .3s ease;
+    cursor: pointer;
+    filter: drop-shadow(2px 2px 1px rgba(#000, .5));
+
+    &--is-toggle {
+      transform: rotate(360deg);
+    }
+  }
 
   &__tracks {
     display: flex;
@@ -10,11 +30,11 @@
     max-height: 700px;
     transition: 0.3s ease;
     position: relative;
-
     @include scrollbarStyles;
-  }
+    clip-path: polygon(0 0, 0 0, 0 0, 40px 40px);
 
-  &__close-button {
-    position: absolute;
+    &--is-list-visible {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
   }
 }

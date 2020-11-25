@@ -27,6 +27,7 @@ import {
   SetNotificationType,
   showNotificationAction,
 } from "../../redux/notifications";
+import {getNextTrackInfo} from "./_utils/get-nex-track-info";
 
 const CLASS_NAME = "Player";
 const cn = classnames.bind(styles);
@@ -68,8 +69,11 @@ class Player extends Component<PropsType, StateType> {
 
   onChangeTrack = () => {
     const {trackList, tracksCount, trackIndex} = this.props;
-    const index = trackIndex < tracksCount ? trackIndex + 1 : 0;
-    const {url, name} = trackList[index];
+    const {url, name, index} = getNextTrackInfo({
+      trackList,
+      tracksCount,
+      trackIndex,
+    });
 
     this.handlePlay({url, name, index});
   };
@@ -78,11 +82,11 @@ class Player extends Component<PropsType, StateType> {
     this.setState({hasBackround: false});
   };
 
-  show = () => {
+  onShowNextTrack = () => {
     const {trackList, tracksCount, trackIndex, onShowNotification} = this.props;
-    const index = trackIndex < tracksCount ? trackIndex + 1 : 0;
-    const { name } = trackList[index];
-    onShowNotification({ text: name });
+    const {name} = getNextTrackInfo({trackList, tracksCount, trackIndex});
+
+    onShowNotification({text: name});
   };
 
   render() {
@@ -113,7 +117,7 @@ class Player extends Component<PropsType, StateType> {
                 onError={this.onErrorLoadingBackgound}
               />
             )}
-            <button onClick={this.show}>SHOW</button>
+
             <div className={cn(`${CLASS_NAME}__panel`)}>
               <img
                 className={cn(`${CLASS_NAME}__cover`)}
@@ -127,7 +131,7 @@ class Player extends Component<PropsType, StateType> {
                   onChangeTrack={this.onChangeTrack}
                   onSetPlayer={onSetPlayer}
                   firstTrackOnLoad={firstTrackOnLoad}
-                  onShowNextTrack={this.show}
+                  onShowNextTrack={this.onShowNextTrack}
                 />
               </div>
             </div>
