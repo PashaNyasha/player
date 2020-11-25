@@ -1,0 +1,61 @@
+.Volume {
+  width: 40px;
+  height: 40px;
+  margin-left: 12px;
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  &__icon {
+    width: 80%;
+    height: 80%;
+    background: #fff;
+    clip-path: polygon(0 25%, 25% 25%, 75% 0, 75% 100%, 25% 75%, 0 75%);
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &:hover > &__track {
+    min-width: 100px;
+    opacity: 1;
+    transform: translateX(28%);
+  }
+
+  &__track {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    min-width: 0;
+    opacity: 0;
+    padding: 4px;
+    transform: translateX(4%);
+    background: none;
+    transition: 0.4s ease;
+
+    // min-width: 100px;
+    // opacity: 1;
+    // transform: translateX(28%);
+  }
+
+  &__range {
+    appearance: none;
+    width: 100%;
+    opacity: 1;
+    height: 2px;
+    background: rgba(#fff, 0.4);
+    box-shadow: 0 0 0px 7px rgba(#000, 0.4);
+    border-radius: 0 6px 6px 0;
+    outline: none;
+    cursor: pointer;
+
+    &::-webkit-slider-thumb {
+      appearance: none;
+      background: #fff;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+  }
+}

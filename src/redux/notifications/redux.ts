@@ -13,7 +13,6 @@ const reducer = (
   state: NotificationStorageType = initialState,
   {type, payload}: NotificationsActionTypes
 ) => {
-  console.log(type, payload)
   switch (type) {
     case SHOW_NOTIFICATION_ACTION:
       return {

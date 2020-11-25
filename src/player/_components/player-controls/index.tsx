@@ -12,8 +12,9 @@ import styles from "./index.module.scss";
 import {formatPlayerTime} from "./_utils/format-player-time";
 import {Text} from "../../../_components/text";
 import {TrackListItemType} from "../../redux/player/types";
-import {ProgressBar} from "./_components/track/progress-bar";
+import {ProgressBar} from "./_components/progress-bar";
 import {Tooltip} from "../../../_components/tooltip";
+import {Volume} from "./_components/volume";
 
 const CLASS_NAME = "Player-controls";
 const cn = classnames.bind(styles);
@@ -83,11 +84,15 @@ export const PlayerControls = memo(
         const updatedProgress = (currentTime / duration) * 100;
         setProgress(String(updatedProgress));
 
-        if (currentTime === duration) {
-          onChangeTrack();
+        if (updatedProgress > 70) {
+          onShowNextTrack();
         }
+
+        // if (currentTime === duration) {
+        //   onChangeTrack();
+        // }
       }
-    }, [duration, onChangeTrack]);
+    }, [duration, onChangeTrack, onShowNextTrack]);
 
     const onChangeDuration = useCallback(() => {
       if (audioPlayer.current) {
@@ -113,7 +118,6 @@ export const PlayerControls = memo(
         const {current} = audioPlayer;
         if (current) {
           current.volume = Number(value);
-          console.log(Number(value) * 100)
         }
       },
       []
@@ -171,18 +175,7 @@ export const PlayerControls = memo(
             disabled={isButtonDisabled}
           />
 
-          <div className={cn(`${CLASS_NAME}__volume`)}>
-            <input
-              type="range"
-              name="volume"
-              id="Volume"
-              onChange={handleChangeVolume}
-              min={0}
-              max={1}
-              step={0.1}
-              className={cn(`${CLASS_NAME}__volume-thumb`)}
-            />
-          </div>
+          <Volume onChangeVolume={handleChangeVolume} />
         </div>
       </div>
     );
